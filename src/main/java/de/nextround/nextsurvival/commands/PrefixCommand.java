@@ -1,8 +1,8 @@
 package de.nextround.nextsurvival.commands;
 
 import de.nextround.nextsurvival.nextSurvival;
-import de.nextround.nextsurvival.listeners.utilities.FileManager;
-import de.nextround.nextsurvival.listeners.utilities.ServerConfig;
+import de.nextround.nextsurvival.utilities.FileManager;
+import de.nextround.nextsurvival.utilities.ServerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

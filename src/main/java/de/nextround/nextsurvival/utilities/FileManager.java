@@ -1,4 +1,4 @@
-package de.nextround.nextsurvival.listeners.utilities;
+package de.nextround.nextsurvival.utilities;
 
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;

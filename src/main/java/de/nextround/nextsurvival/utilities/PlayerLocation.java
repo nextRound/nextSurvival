@@ -1,4 +1,4 @@
-package de.nextround.nextsurvival.listeners.utilities;
+package de.nextround.nextsurvival.utilities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
