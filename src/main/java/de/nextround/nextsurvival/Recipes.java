@@ -10,13 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class Recipes {
 
-    private final nextSurvival instance;
-
-    public Recipes(nextSurvival instance) {
-        this.instance = instance;
-    }
-
-    public void registerRecipes() {
+    public static void registerRecipes() {
         addSlabRecipe("oak_slab_plank", Material.OAK_PLANKS, Material.OAK_SLAB);
         addSlabRecipe("spruce_slab_plank", Material.SPRUCE_PLANKS, Material.SPRUCE_SLAB);
         addSlabRecipe("birch_slab_plank", Material.BIRCH_PLANKS, Material.BIRCH_SLAB);
@@ -48,8 +42,8 @@ public class Recipes {
      * Adds new slap recipe to the spigot server with the specific pattern.
      * @param key name of the recipe
      */
-    public void addSlabRecipe(String key, Material result, Material ingredient) {
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(instance, key), new ItemStack(result));
+    public static void addSlabRecipe(String key, Material result, Material ingredient) {
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(nextSurvival.instance, key), new ItemStack(result));
         recipe.shape("O", "O");
         recipe.setIngredient('O', ingredient);
         Bukkit.addRecipe(recipe);
@@ -59,7 +53,7 @@ public class Recipes {
      * Adds new portable workbench recipe to the spigot server with the specific pattern.
      * @param key name of the recipe
      */
-    public void addPortableWorkbenchRecipe(String key, Material wood) {
+    public static void addPortableWorkbenchRecipe(String key, Material wood) {
         ItemStack craftItem = new ItemStack(Material.CRAFTING_TABLE, 1);
         ItemMeta itemMeta = craftItem.getItemMeta();
         if(itemMeta != null) {
@@ -68,11 +62,10 @@ public class Recipes {
             craftItem.setItemMeta(itemMeta);
         }
 
-        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(instance, key), craftItem);
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(nextSurvival.instance, key), craftItem);
         recipe.shape("OOO", "OSO", "OOO");
         recipe.setIngredient('O', wood);
         recipe.setIngredient('S', Material.DIAMOND);
         Bukkit.addRecipe(recipe);
     }
-
 }

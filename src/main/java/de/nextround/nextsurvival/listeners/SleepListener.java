@@ -24,11 +24,9 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
  */
 
 public class SleepListener implements Listener {
-    private final nextSurvival instance;
 
-    public SleepListener(nextSurvival instance) {
-        this.instance = instance;
-        Bukkit.getPluginManager().registerEvents(this, instance);
+    public SleepListener() {
+        Bukkit.getPluginManager().registerEvents(this, nextSurvival.instance);
     }
 
     /*
@@ -60,6 +58,6 @@ public class SleepListener implements Listener {
         world.setTime(world.getTime() + 80);
 
         if (world.getTime() > 12516 && world.getTime() < 23900)
-            instance.getServer().getScheduler().runTaskLater(instance, () -> forward(world), 1);
+            nextSurvival.instance.getServer().getScheduler().runTaskLater(nextSurvival.instance, () -> forward(world), 1);
     }
 }

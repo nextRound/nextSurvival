@@ -48,7 +48,7 @@ public class nextSurvival extends JavaPlugin {
         instance = this;
         registerCommands();
         registerListeners();
-        new Recipes(this).registerRecipes();
+        Recipes.registerRecipes();
 
         FileManager.createDefaultServerConfigFile(new ServerConfig("bamboowagon"));
 
@@ -66,9 +66,9 @@ public class nextSurvival extends JavaPlugin {
      * Function to register all commands in de.nextround.nextsurvival.commands
      */
     private void registerCommands() {
-        getCommand("home").setExecutor(new HomeCommand(this));
-        getCommand("sethome").setExecutor(new HomeCommand(this));
-        getCommand("back").setExecutor(new HomeCommand(this));
+        getCommand("home").setExecutor(new HomeCommand());
+        getCommand("sethome").setExecutor(new HomeCommand());
+        getCommand("back").setExecutor(new HomeCommand());
         getCommand("prefix").setExecutor(new PrefixCommand());
     }
 
@@ -76,10 +76,10 @@ public class nextSurvival extends JavaPlugin {
      * Function to register all listeners in de.nextround.nextsurvival.listeners
      */
     private void registerListeners() {
-        new ConnectionListeners(this);
-        new ChatListener(this);
-        new MoveListener(this);
-        new SleepListener(this);
-        new GriefListener(this);
+        new ConnectionListeners();
+        new ChatListener();
+        new MoveListener();
+        new SleepListener();
+        new GriefListener();
     }
 }

@@ -27,11 +27,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ConnectionListeners implements Listener {
 
-    public final nextSurvival instance;
-
-    public ConnectionListeners(nextSurvival instance) {
-        this.instance = instance;
-        Bukkit.getPluginManager().registerEvents(this, instance);
+    public ConnectionListeners() {
+        Bukkit.getPluginManager().registerEvents(this, nextSurvival.instance);
     }
 
     /*
@@ -55,14 +52,14 @@ public class ConnectionListeners implements Listener {
         if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId())) {
             serverConfig.addPasswordChecker(player.getUniqueId(), false);
 
-            instance.password.add(player);
+            nextSurvival.instance.password.add(player);
             player.setGameMode(GameMode.ADVENTURE);
 
             player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §aPASSWORD §4in the chat!");
 
             FileManager.updateDefaultServerConfigFile(serverConfig);
         }else if(!serverConfig.getPasswordChecker().get(player.getUniqueId())) {
-            instance.password.add(player);
+            nextSurvival.instance.password.add(player);
             player.setGameMode(GameMode.ADVENTURE);
 
             player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §aPASSWORD §4in the chat!");

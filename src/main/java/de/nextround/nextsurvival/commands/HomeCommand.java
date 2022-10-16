@@ -25,12 +25,6 @@ import org.bukkit.entity.Player;
 
 public class HomeCommand implements CommandExecutor {
 
-    private final nextSurvival instance;
-
-    public HomeCommand(nextSurvival instance) {
-        this.instance = instance;
-    }
-
     public boolean onCommand(CommandSender sender, Command command, String arg, String[] args) {
         Player player = (Player) sender;
         ServerConfig serverConfig = ServerConfig.getServerConfig();
@@ -65,7 +59,7 @@ public class HomeCommand implements CommandExecutor {
         } else if (command.getName().equalsIgnoreCase("back")) {
             if (args.length == 0) {
                 if (serverConfig.getDeathLocations().containsKey(player.getUniqueId())) {
-                    if(instance.recentlyDied.contains(player)) {
+                    if(nextSurvival.instance.recentlyDied.contains(player)) {
                         serverConfig.getDeathLocations().get(player.getUniqueId()).teleportPlayer(player);
 
                         player.sendMessage(nextSurvival.PREFIX + " §9You are now at your death location!");

@@ -24,8 +24,8 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class GriefListener implements Listener {
 
-    public GriefListener(nextSurvival instance) {
-        Bukkit.getPluginManager().registerEvents(this, instance);
+    public GriefListener() {
+        Bukkit.getPluginManager().registerEvents(this, nextSurvival.instance);
     }
 
     /*

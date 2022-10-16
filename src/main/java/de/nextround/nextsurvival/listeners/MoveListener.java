@@ -36,11 +36,8 @@ import java.util.Objects;
 
 public class MoveListener implements Listener {
 
-    public final nextSurvival instance;
-
-    public MoveListener(nextSurvival instance) {
-        this.instance = instance;
-        Bukkit.getPluginManager().registerEvents(this, instance);
+    public MoveListener() {
+        Bukkit.getPluginManager().registerEvents(this, nextSurvival.instance);
     }
 
     /*
@@ -100,7 +97,7 @@ public class MoveListener implements Listener {
      */
     @EventHandler
     public void onDisableMoveEvent(PlayerMoveEvent event) {
-        event.setCancelled(instance.password.contains(event.getPlayer()));
+        event.setCancelled(nextSurvival.instance.password.contains(event.getPlayer()));
     }
 
     /*
@@ -126,14 +123,14 @@ public class MoveListener implements Listener {
     public void onDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        instance.recentlyDied.add(player);
+        nextSurvival.instance.recentlyDied.add(player);
 
         ServerConfig serverConfig = ServerConfig.getServerConfig();
         serverConfig.addDeathLocation(player, new PlayerLocation(player));
         FileManager.updateDefaultServerConfigFile(serverConfig);
 
-        Bukkit.getScheduler().runTaskLater(instance, () -> {
-            instance.recentlyDied.remove(player);
+        Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> {
+            nextSurvival.instance.recentlyDied.remove(player);
             player.sendMessage(nextSurvival.PREFIX + " §9Death location was disabled after §d§l60 §r§9seconds!");
         },1200);
     }

@@ -26,11 +26,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
 
-    public final nextSurvival instance;
-
-    public ChatListener(nextSurvival instance) {
-        this.instance = instance;
-        Bukkit.getPluginManager().registerEvents(this, instance);
+    public ChatListener() {
+        Bukkit.getPluginManager().registerEvents(this, nextSurvival.instance);
     }
 
     /*
@@ -44,7 +41,7 @@ public class ChatListener implements Listener {
 
         ServerConfig serverConfig = ServerConfig.getServerConfig();
 
-        if (!instance.password.contains(player)) {
+        if (!nextSurvival.instance.password.contains(player)) {
             if (serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
                 Bukkit.broadcastMessage(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&", "§") + " §5" + player.getName() + " §8» §r" + event.getMessage());
             } else {
@@ -64,9 +61,9 @@ public class ChatListener implements Listener {
 
         ServerConfig serverConfig = ServerConfig.getServerConfig();
 
-        if(instance.password.contains(player)) {
+        if(nextSurvival.instance.password.contains(player)) {
             if(event.getMessage().equals(ServerConfig.getServerConfig().getPassword())) {
-                instance.password.remove(player);
+                nextSurvival.instance.password.remove(player);
                 serverConfig.addPasswordChecker(player.getUniqueId(), true);
                 player.setGameMode(GameMode.SURVIVAL);
 
