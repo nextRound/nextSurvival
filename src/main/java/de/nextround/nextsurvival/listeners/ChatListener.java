@@ -63,9 +63,13 @@ public class ChatListener implements Listener {
 
         if(nextSurvival.instance.password.contains(player)) {
             if(event.getMessage().equals(ServerConfig.getServerConfig().getPassword())) {
+                event.setCancelled(true);
                 nextSurvival.instance.password.remove(player);
                 serverConfig.addPasswordChecker(player.getUniqueId(), true);
-                player.setGameMode(GameMode.SURVIVAL);
+
+                Bukkit.getScheduler().runTask(nextSurvival.instance ,()-> {
+                    player.setGameMode(GameMode.SURVIVAL);
+                });
 
                 player.sendMessage(nextSurvival.PREFIX + " §9You got it right! §d§l§k::: §r§bYaaay Wooop Wooop §d§l§k:::");
                 System.out.println(nextSurvival.PREFIX + " " + player.getName() + " is now a member of the server!");
