@@ -59,9 +59,9 @@ public class MoveListener implements Listener {
 
             } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Smoke")) {
 
-                player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
 
             } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Lava")) {
 
@@ -73,15 +73,15 @@ public class MoveListener implements Listener {
 
             } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Water")) {
 
-                player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation(), 1);
-                player.getWorld().spawnParticle(Particle.WATER_SPLASH, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
 
             } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Firework")) {
 
-                player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, player.getLocation(), 1);
+                player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation(), 1);
 
             } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Cloud")) {
 

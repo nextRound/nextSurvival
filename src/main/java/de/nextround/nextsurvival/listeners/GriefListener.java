@@ -33,7 +33,7 @@ public class GriefListener implements Listener {
      */
     @EventHandler
     public void onCreeper(EntityExplodeEvent e) {
-        if (e.getEntityType() != EntityType.PRIMED_TNT) {
+        if (e.getEntityType() != EntityType.TNT) {
             e.blockList().clear();
         }
     }

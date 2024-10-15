@@ -58,7 +58,7 @@ public class Recipes {
         ItemMeta itemMeta = craftItem.getItemMeta();
         if(itemMeta != null) {
             itemMeta.setDisplayName("§2Portable Workbench");
-            itemMeta.addEnchant(Enchantment.LUCK, 100, true);
+            itemMeta.addEnchant(Enchantment.FORTUNE, 100, true);
             craftItem.setItemMeta(itemMeta);
         }
 
