@@ -19,6 +19,7 @@ public class Recipes {
         addSlabRecipe("dark_oak_slab_plank", Material.DARK_OAK_PLANKS, Material.DARK_OAK_SLAB);
         addSlabRecipe("crimson_slab_plank", Material.CRIMSON_PLANKS, Material.CRIMSON_SLAB);
         addSlabRecipe("warped_slab_plank", Material.WARPED_PLANKS, Material.WARPED_SLAB);
+        addSlabRecipe("cherry_slab_plank", Material.CHERRY_PLANKS, Material.CHERRY_SLAB);
 
         addSlabRecipe("stone_slab_block", Material.STONE, Material.STONE_SLAB);
         addSlabRecipe("smooth_stone_slab_block", Material.SMOOTH_STONE, Material.SMOOTH_STONE_SLAB);
