@@ -3,6 +3,14 @@ package de.nextround.nextsurvival.listeners;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
+import io.papermc.paper.chat.ChatRenderer;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -31,50 +39,42 @@ public class ChatListener implements Listener {
     }
 
     /*
-     * Displays a chat message depending on the prefix of the player (if one exists)
-     */
-    @EventHandler
-    public void onAChatListener(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
-
-        event.setCancelled(true);
-
-        ServerConfig serverConfig = ServerConfig.getServerConfig();
-
-        if (!nextSurvival.instance.password.contains(player)) {
-            if (serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
-                Bukkit.broadcastMessage(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&", "§") + " §5" + player.getName() + " §8» §r" + event.getMessage());
-            } else {
-                Bukkit.broadcastMessage("§5" + player.getName() + " §8» §r" + event.getMessage());
-            }
-        }
-    }
-
-    /*
-     * Checks if the player is part of password array that was created in ConnectionListener>onJoinListener
+     * Displays a chat message depending on the prefix of the player (if one exists) and
+     * checks if the player is part of password array that was created in ConnectionListener>onJoinListener
      * if that's the case it checks if the password the player typed is equal to the config.json entry
      * if the player got it right the password entry of the player is set to true
      */
     @EventHandler
-    public void onChatListener(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
+    public void onPlayerChat(AsyncChatEvent event) {
+        event.renderer((source, sourceDisplayName, message, viewer) -> {
+            ServerConfig serverConfig = ServerConfig.getServerConfig();
+            if (!nextSurvival.instance.password.contains(source)) {
+                String textMessage = ((TextComponent)message).content().replace(ServerConfig.getServerConfig().getPassword(), "********");
 
-        ServerConfig serverConfig = ServerConfig.getServerConfig();
+                if (serverConfig.getPrefixes().containsKey(source.getUniqueId())) {
+                    return LegacyComponentSerializer.legacySection().deserialize(serverConfig.getPrefixes().get(source.getUniqueId()).replace("&", "§") + " §5" + source.getName() + " §8» §r" + textMessage);
+                } else {
+                    return LegacyComponentSerializer.legacySection().deserialize("§5" + source.getName() + " §8» §r" + textMessage);
+                }
+            }else{
+                if(((TextComponent) message).content().equals(ServerConfig.getServerConfig().getPassword())) {
+                    event.setCancelled(true);
 
-        if(nextSurvival.instance.password.contains(player)) {
-            if(event.getMessage().equals(ServerConfig.getServerConfig().getPassword())) {
-                event.setCancelled(true);
-                nextSurvival.instance.password.remove(player);
-                serverConfig.addPasswordChecker(player.getUniqueId(), true);
+                    nextSurvival.instance.password.remove(source);
+                    serverConfig.addPasswordChecker(source.getUniqueId(), true);
 
-                Bukkit.getScheduler().runTask(nextSurvival.instance ,()-> {
-                    player.setGameMode(GameMode.SURVIVAL);
-                });
+                    Bukkit.getScheduler().runTask(nextSurvival.instance ,()-> {
+                        source.setGameMode(GameMode.SURVIVAL);
+                    });
 
-                player.sendMessage(nextSurvival.PREFIX + " §9You got it right! §d§l§k::: §r§bYaaay Wooop Wooop §d§l§k:::");
-                System.out.println(nextSurvival.PREFIX + " " + player.getName() + " is now a member of the server!");
-                FileManager.updateDefaultServerConfigFile(serverConfig);
+                    source.sendMessage(nextSurvival.PREFIX + " §3You got it right! §d§l§k::: §r§bYaaay Wooop Wooop §d§l§k:::");
+                    System.out.println(nextSurvival.PREFIX + " " + source.getName() + " is now a member of the server!");
+                    FileManager.updateDefaultServerConfigFile(serverConfig);
+                }
             }
-        }
+
+            return Component.empty();
+        });
     }
+
 }

@@ -43,11 +43,10 @@ public class ConnectionListeners implements Listener {
         ServerConfig serverConfig = ServerConfig.getServerConfig();
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
-            event.setJoinMessage("§7[§a+§7] "+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
+            event.setJoinMessage("§7[§a+§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
         }else{
             event.setJoinMessage("§7[§a+§7]§5 "+player.getName());
         }
-
 
         if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId())) {
             serverConfig.addPasswordChecker(player.getUniqueId(), false);
@@ -62,8 +61,8 @@ public class ConnectionListeners implements Listener {
             nextSurvival.instance.password.add(player);
             player.setGameMode(GameMode.ADVENTURE);
 
-            player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §aPASSWORD §4in the chat!");
-            player.sendMessage(nextSurvival.PREFIX + " §9While doing that you §aACCEPT all of our server rules:");
+            player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §a§lPASSWORD §4in the chat!");
+            player.sendMessage(nextSurvival.PREFIX + " §3While doing that you §a§lACCEPT §3tall of our server rules!");
         }
     }
 
@@ -77,7 +76,7 @@ public class ConnectionListeners implements Listener {
         ServerConfig serverConfig = ServerConfig.getServerConfig();
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
-            event.setQuitMessage("§7[§c-§7] "+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
+            event.setQuitMessage("§7[§c-§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
         }else {
             event.setQuitMessage("§7[§c-§7]§5 " + player.getName());
         }

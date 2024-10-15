@@ -39,12 +39,12 @@ public class SleepListener implements Listener {
         if (e.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             double count = Bukkit.getOnlinePlayers().stream().filter(LivingEntity::isSleeping).count() + 1;
             double ratio = count / Bukkit.getOnlinePlayers().size();
-            Bukkit.broadcastMessage(nextSurvival.PREFIX + " " + e.getPlayer().getDisplayName() +
-                    ChatColor.BLUE + " is now sleeping (" + Math.floor(ratio * 100) + "%)");
+            Bukkit.broadcastMessage(nextSurvival.PREFIX + " §5" + e.getPlayer().getDisplayName() +
+                    " §3is now sleeping §7(§f§l" + Math.floor(ratio * 100) + "%§7)");
             if (ratio >= 0.3) {
                 e.getBed().getWorld().setClearWeatherDuration(Integer.MAX_VALUE);
-                String message = e.getBed().getWorld().isClearWeather() ? " "+Math.floor(ratio * 100)+ "% are sleeping. Skipping the night..." :
-                        " "+Math.floor(ratio * 100)+"% are sleeping. Skipping the thunderstorm...";
+                String message = e.getBed().getWorld().isClearWeather() ? " §f§l"+Math.floor(ratio * 100)+ "% §3are sleeping. Skipping the night..." :
+                        " §f§l"+Math.floor(ratio * 100)+"% §3are sleeping. Skipping the thunderstorm...";
                 Bukkit.broadcastMessage(nextSurvival.PREFIX + ChatColor.BLUE + message);
                 Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> forward(e.getBed().getWorld()), 40);
             }

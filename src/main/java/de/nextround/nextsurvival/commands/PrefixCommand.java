@@ -51,8 +51,8 @@ public class PrefixCommand implements CommandExecutor {
                     Bukkit.getServer().broadcastMessage(nextSurvival.PREFIX + " &cPlayer is not on the server!");
                 }
 
-                player.sendMessage(nextSurvival.PREFIX + " §9You have set the prefix '"
-                        +args[1].replace("&", "§")+"§9' for §r"+args[0]+"§9!");
+                player.sendMessage(nextSurvival.PREFIX + " §3You have set the prefix '§r"
+                        +args[1].replace("&", "§")+"§3' for §r"+args[0]+"§3!");
 
                 FileManager.updateDefaultServerConfigFile(serverConfig);
             }

@@ -131,7 +131,7 @@ public class MoveListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> {
             nextSurvival.instance.recentlyDied.remove(player);
-            player.sendMessage(nextSurvival.PREFIX + " §9Death location was disabled after §d§l60 §r§9seconds!");
+            player.sendMessage(nextSurvival.PREFIX + " §3Death location was disabled after §f§l60 §r§3seconds!");
         },1200);
     }
 

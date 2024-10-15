@@ -41,7 +41,7 @@ public class HomeCommand implements CommandExecutor {
                 }
                 serverConfig.getHomeLocations().get(player.getUniqueId()).teleportPlayer(player);
 
-                player.sendMessage(nextSurvival.PREFIX + " §9You are now at your home!");
+                player.sendMessage(nextSurvival.PREFIX + " §3You are now at your home!");
 
                 return true;
             } else if(args.length==1) {
@@ -49,7 +49,7 @@ public class HomeCommand implements CommandExecutor {
                     serverConfig.addHomeLocation(player, new PlayerLocation(player));
 
                     FileManager.updateDefaultServerConfigFile(serverConfig);
-                    player.sendMessage(nextSurvival.PREFIX + " §9Your home is now set to this location!");
+                    player.sendMessage(nextSurvival.PREFIX + " §3Your home is now set to this location!");
                     return true;
                 }else{
                     player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /home <set>");
@@ -62,9 +62,9 @@ public class HomeCommand implements CommandExecutor {
                     if(nextSurvival.instance.recentlyDied.contains(player)) {
                         serverConfig.getDeathLocations().get(player.getUniqueId()).teleportPlayer(player);
 
-                        player.sendMessage(nextSurvival.PREFIX + " §9You are now at your death location!");
+                        player.sendMessage(nextSurvival.PREFIX + " §3You are now at your death location!");
                     }else{
-                        player.sendMessage(nextSurvival.PREFIX + " §9You ran out of time §d§l:/ §k§9There is no going back now. Sorry §d§l; -;");
+                        player.sendMessage(nextSurvival.PREFIX + " §3You ran out of time §f§l:/ §k§3There is no going back now. Sorry §f§l,_,");
                     }
                 } else {
                     player.sendMessage(nextSurvival.PREFIX + " §cYou have no death location saved by the server!");
@@ -75,7 +75,7 @@ public class HomeCommand implements CommandExecutor {
 
             FileManager.updateDefaultServerConfigFile(serverConfig);
 
-            player.sendMessage(nextSurvival.PREFIX + " §9Your home is now set to this location!");
+            player.sendMessage(nextSurvival.PREFIX + " §3Your home is now set to this location!");
             return true;
         }
         return false;
