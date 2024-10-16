@@ -28,8 +28,8 @@ import java.util.Objects;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -125,9 +125,9 @@ public class MoveListener implements Listener {
 
         nextSurvival.instance.recentlyDied.add(player);
 
-        ServerConfig serverConfig = ServerConfig.getServerConfig();
+        ServerConfig serverConfig = nextSurvival.serverConfig;
         serverConfig.addDeathLocation(player, new PlayerLocation(player));
-        FileManager.updateDefaultServerConfigFile(serverConfig);
+        FileManager.saveServerConfigFile(serverConfig);
 
         Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> {
             nextSurvival.instance.recentlyDied.remove(player);

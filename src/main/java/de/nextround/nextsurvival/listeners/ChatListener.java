@@ -3,20 +3,15 @@ package de.nextround.nextsurvival.listeners;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
-import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.TextReplacementConfig;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /*
  *
@@ -26,8 +21,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -47,9 +42,10 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
         event.renderer((source, sourceDisplayName, message, viewer) -> {
-            ServerConfig serverConfig = ServerConfig.getServerConfig();
+            ServerConfig serverConfig = nextSurvival.serverConfig;
+
             if (!nextSurvival.instance.password.contains(source)) {
-                String textMessage = ((TextComponent)message).content().replace(ServerConfig.getServerConfig().getPassword(), "********");
+                String textMessage = ((TextComponent)message).content().replace(serverConfig.getPassword(), "********");
 
                 if (serverConfig.getPrefixes().containsKey(source.getUniqueId())) {
                     return LegacyComponentSerializer.legacySection().deserialize(serverConfig.getPrefixes().get(source.getUniqueId()).replace("&", "§") + " §5" + source.getName() + " §8» §r" + textMessage);
@@ -57,7 +53,7 @@ public class ChatListener implements Listener {
                     return LegacyComponentSerializer.legacySection().deserialize("§5" + source.getName() + " §8» §r" + textMessage);
                 }
             }else{
-                if(((TextComponent) message).content().equals(ServerConfig.getServerConfig().getPassword())) {
+                if(((TextComponent) message).content().equals(serverConfig.getPassword())) {
                     event.setCancelled(true);
 
                     nextSurvival.instance.password.remove(source);
@@ -69,7 +65,8 @@ public class ChatListener implements Listener {
 
                     source.sendMessage(nextSurvival.PREFIX + " §3You got it right! §d§l§k::: §r§bYaaay Wooop Wooop §d§l§k:::");
                     System.out.println(nextSurvival.PREFIX + " " + source.getName() + " is now a member of the server!");
-                    FileManager.updateDefaultServerConfigFile(serverConfig);
+                    
+                    FileManager.saveServerConfigFile(serverConfig);
                 }
             }
 

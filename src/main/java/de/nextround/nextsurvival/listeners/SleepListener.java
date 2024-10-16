@@ -17,8 +17,8 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */

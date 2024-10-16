@@ -1,5 +1,7 @@
 package de.nextround.nextsurvival;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -7,6 +9,20 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+/*
+ *
+ *
+ *    █▀▀▄ █▀▀ █░█ ▀▀█▀▀ ▒█▀▀▀█ █░░█ █▀▀█ ▀█░█▀ ░▀░ ▀█░█▀ █▀▀█ █░░
+ *    █░░█ █▀▀ ▄▀▄ ░░█░░ ░▀▀▀▄▄ █░░█ █▄▄▀ ░█▄█░ ▀█▀ ░█▄█░ █▄▄█ █░░
+ *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
+ *
+ *    Project: nextSurvival
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
+ *
+ *
+ */
 
 public class Recipes {
 
@@ -58,7 +74,7 @@ public class Recipes {
         ItemStack craftItem = new ItemStack(Material.CRAFTING_TABLE, 1);
         ItemMeta itemMeta = craftItem.getItemMeta();
         if(itemMeta != null) {
-            itemMeta.setDisplayName("§2Portable Workbench");
+            itemMeta.displayName(Component.text("Portable Workbench", NamedTextColor.AQUA));
             itemMeta.addEnchant(Enchantment.FORTUNE, 100, true);
             craftItem.setItemMeta(itemMeta);
         }

@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /*
  *
@@ -17,8 +18,8 @@ import org.bukkit.entity.Player;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -28,7 +29,7 @@ public class PrefixCommand implements CommandExecutor {
     /*
      * Creates a /prefix [name] [prefix] command
      */
-    public boolean onCommand(CommandSender sender, Command command, String arg, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String arg, String[] args) {
         Player player = (Player) sender;
 
         if(command.getName().equalsIgnoreCase("prefix")) {
@@ -42,19 +43,21 @@ public class PrefixCommand implements CommandExecutor {
             }else if(args.length==1) {
                 player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /prefix [name] [prefix]");
                 return false;
-            }else if(args.length==2) {
-                ServerConfig serverConfig = ServerConfig.getServerConfig();
+            }else {
+                ServerConfig serverConfig = nextSurvival.serverConfig;
 
                 if(Bukkit.getServer().getPlayer(args[0]) != null) {
                     serverConfig.addPrefixes(Bukkit.getServer().getPlayer(args[0]).getUniqueId(), args[1]);
                 }else{
-                    Bukkit.getServer().broadcastMessage(nextSurvival.PREFIX + " &cPlayer is not on the server!");
+                    Bukkit.getServer().broadcastMessage(nextSurvival.PREFIX + " §cPlayer is not on the server!");
+                    return true;
                 }
 
                 player.sendMessage(nextSurvival.PREFIX + " §3You have set the prefix '§r"
                         +args[1].replace("&", "§")+"§3' for §r"+args[0]+"§3!");
 
-                FileManager.updateDefaultServerConfigFile(serverConfig);
+                FileManager.saveServerConfigFile(serverConfig);
+                return true;
             }
         }
         return false;

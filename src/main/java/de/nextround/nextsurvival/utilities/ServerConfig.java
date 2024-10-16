@@ -18,8 +18,8 @@ import java.util.UUID;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -98,20 +98,17 @@ public class ServerConfig {
     /*
      * Reads the config.json and returns a ServerConfig object with the content of the config.json
      */
-    public static ServerConfig getServerConfig() {
+    public static ServerConfig getServerConfig() throws IOException {
         File file = new File("plugins/nextSurvival", "config.json");
 
-        try {
+        if (!file.exists()) {
+            return FileManager.createDefaultServerConfigFile(new ServerConfig("bamboowagon"));
+        } else {
             String userConfig = new String(Files.readAllBytes(Paths.get(file.getPath())));
 
             Gson gson = new Gson();
 
             return gson.fromJson(userConfig, ServerConfig.class);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-        return FileManager.createDefaultServerConfigFile(new ServerConfig("bamboowagon"));
     }
-
 }

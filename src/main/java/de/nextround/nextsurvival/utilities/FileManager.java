@@ -15,8 +15,8 @@ import java.io.IOException;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -29,31 +29,26 @@ public class FileManager {
      * @param serverConfig The config you want to save
      * @return passed server configuration file
      */
-    public static ServerConfig createDefaultServerConfigFile(ServerConfig serverConfig) {
+    public static ServerConfig createDefaultServerConfigFile(ServerConfig serverConfig) throws IOException {
         Gson gson = new Gson();
         String server = gson.toJson(serverConfig);
 
         File file = new File("plugins/nextSurvival/", "config.json");
 
-        try {
-            if(!file.getParentFile().exists()) {
-                if(file.getParentFile().mkdirs()) {
-                    Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3Plugin directory has been created!");
-                }
+        if(!file.getParentFile().exists()) {
+            if(file.getParentFile().mkdirs()) {
+                Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3Plugin directory has been created!");
             }
+        }
 
-            if (file.createNewFile()) {
-                FileWriter fileWriter = new FileWriter(file);
+        if (file.createNewFile()) {
+            FileWriter fileWriter = new FileWriter(file);
 
-                fileWriter.write(server);
-                fileWriter.close();
+            fileWriter.write(server);
+            fileWriter.close();
 
-                Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3Config-File has been created!");
-                return serverConfig;
-            }
-
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3Config-File has been created!");
+            return serverConfig;
         }
 
         return serverConfig;
@@ -62,7 +57,7 @@ public class FileManager {
     /*
      * Updates the plugins/nextSurvival/config.json with the new provided ServerConfig
      */
-    public static void updateDefaultServerConfigFile(ServerConfig serverConfig) {
+    public static void saveServerConfigFile(ServerConfig serverConfig) {
         Gson gson = new Gson();
         String server = gson.toJson(serverConfig);
 
@@ -73,9 +68,9 @@ public class FileManager {
 
             fileWriter.write(server);
             fileWriter.close();
-
         } catch (IOException e) {
             e.printStackTrace();
+            Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §cConfig file could not be saved!");
         }
     }
 }

@@ -19,8 +19,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
  *    ▀░░▀ ▀▀▀ ▀░▀ ░░▀░░ ▒█▄▄▄█ ░▀▀▀ ▀░▀▀ ░░▀░░ ▀▀▀ ░░▀░░ ▀░░▀ ▀▀▀
  *
  *    Project: nextSurvival
- *    Author: nextRound (Nikki S.)
- *    Copyright (C) Nikki S.
+ *    Author: Nicole Scheitler (nextRound)
+ *    Copyright - GNU GPLv3 (C) Nicole Scheitler
  *
  *
  */
@@ -40,7 +40,7 @@ public class ConnectionListeners implements Listener {
     public void onJoinListener(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ServerConfig serverConfig = ServerConfig.getServerConfig();
+        ServerConfig serverConfig = nextSurvival.serverConfig;
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
             event.setJoinMessage("§7[§a+§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
@@ -56,7 +56,7 @@ public class ConnectionListeners implements Listener {
 
             player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §aPASSWORD §4in the chat!");
 
-            FileManager.updateDefaultServerConfigFile(serverConfig);
+            FileManager.saveServerConfigFile(serverConfig);
         }else if(!serverConfig.getPasswordChecker().get(player.getUniqueId())) {
             nextSurvival.instance.password.add(player);
             player.setGameMode(GameMode.ADVENTURE);
@@ -73,7 +73,7 @@ public class ConnectionListeners implements Listener {
     public void onDisconnectListener(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        ServerConfig serverConfig = ServerConfig.getServerConfig();
+        ServerConfig serverConfig = nextSurvival.serverConfig;
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
             event.setQuitMessage("§7[§c-§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
