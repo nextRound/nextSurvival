@@ -48,7 +48,7 @@ public class SleepListener implements Listener {
                             .color(nextSurvival.highlight_blue))
                     .append(Component.text(" is now sleeping ")
                             .color(nextSurvival.primary))
-                    .append(Component.text(" (")
+                    .append(Component.text("(")
                             .color(nextSurvival.highlight_secondary))
                     .append(Component.text(Math.floor(ratio * 100) + "%")
                             .color(nextSurvival.white)
