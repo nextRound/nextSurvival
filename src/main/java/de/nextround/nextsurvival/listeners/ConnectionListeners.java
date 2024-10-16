@@ -42,8 +42,14 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onJoinListener(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
         ServerConfig serverConfig = nextSurvival.serverConfig;
+
+        joinMessageAndTabList(event, serverConfig, player);
+        passwordCheckMessage(serverConfig, player);
+        setTabHeaderFooter(player);
+    }
+
+    private static void joinMessageAndTabList(PlayerJoinEvent event, ServerConfig serverConfig, Player player) {
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
             event.joinMessage(Component.text("[")
@@ -52,7 +58,11 @@ public class ConnectionListeners implements Listener {
                             .color(TextColor.color(0xFF1A)))
                     .append(Component.text("] ")
                             .color(nextSurvival.highlight_secondary))
-                    .append(Component.text("§r" + serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
+                    .append(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
+                    .append(Component.text(" " + player.getName())
+                            .color(nextSurvival.highlight_primary)));
+
+            player.playerListName(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§"))
                     .append(Component.text(" " + player.getName())
                             .color(nextSurvival.highlight_primary)));
         }else{
@@ -64,9 +74,13 @@ public class ConnectionListeners implements Listener {
                             .color(nextSurvival.highlight_secondary))
                     .append(Component.text(player.getName())
                             .color(nextSurvival.highlight_primary)));
+
+            player.playerListName(Component.text(player.getName())
+                            .color(nextSurvival.highlight_primary));
         }
+    }
 
-
+    private static void passwordCheckMessage(ServerConfig serverConfig, Player player) {
         if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId()) || !serverConfig.getPasswordChecker().get(player.getUniqueId())) {
             if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId()))
                 serverConfig.addPasswordChecker(player.getUniqueId(), false);
@@ -85,6 +99,28 @@ public class ConnectionListeners implements Listener {
         }
     }
 
+    private static void setTabHeaderFooter(Player player) {
+        long days = player.getWorld().getGameTime()/24000;
+        Component header = Component.text(days)
+                .color(nextSurvival.highlight_primary)
+                .decoration(TextDecoration.BOLD, true)
+                .append(Component.text(" Days Passed")
+                        .color(nextSurvival.primary)
+                        .decoration(TextDecoration.BOLD, false));
+        Component footer = Component.text("Have a great ")
+                .color(nextSurvival.primary)
+                .append(Component.text("day")
+                        .color(nextSurvival.highlight_yellow))
+                .append(Component.text("/")
+                        .color(nextSurvival.highlight_secondary))
+                .append(Component.text("night")
+                        .color(nextSurvival.highlight_blue))
+                .append(Component.text(" :3")
+                        .color(nextSurvival.highlight_primary)
+                        .decoration(TextDecoration.BOLD, true));
+        player.sendPlayerListHeaderAndFooter(header, footer);
+    }
+
     /*
      * Displays a beautiful disconnect message depending on the prefix (if one exists)
      */
@@ -101,7 +137,7 @@ public class ConnectionListeners implements Listener {
                             .color(TextColor.color(0xFF2D4B)))
                     .append(Component.text("] ")
                             .color(nextSurvival.highlight_secondary))
-                    .append(Component.text("§r" + serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
+                    .append(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
                     .append(Component.text(" " + player.getName())
                             .color(nextSurvival.highlight_primary)));
         }else {

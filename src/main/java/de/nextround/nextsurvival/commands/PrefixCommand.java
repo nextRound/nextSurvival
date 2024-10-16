@@ -55,7 +55,7 @@ public class PrefixCommand implements CommandExecutor {
                 ServerConfig serverConfig = nextSurvival.serverConfig;
 
                 if(Bukkit.getServer().getPlayer(args[0]) != null) {
-                    serverConfig.addPrefixes(Bukkit.getServer().getPlayer(args[0]).getUniqueId(), args[1]);
+                    serverConfig.addPrefixes(Bukkit.getServer().getPlayer(args[0]).getUniqueId(), "&f" + args[1]);
                 }else{
                     player.sendMessage(nextSurvival.PREFIX
                             .append(Component.text(" Player is not on the server!")
@@ -66,7 +66,7 @@ public class PrefixCommand implements CommandExecutor {
                 player.sendMessage(nextSurvival.PREFIX
                         .append(Component.text(" You have set the prefix '")
                                 .color(nextSurvival.primary))
-                        .append(Component.text(args[1].replace("&", "§")))
+                        .append(Component.text("§f" + args[1].replace("&", "§")))
                         .append(Component.text("' for ")
                                 .color(nextSurvival.primary))
                         .append(Component.text(args[0])
