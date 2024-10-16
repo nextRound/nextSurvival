@@ -3,6 +3,8 @@ package de.nextround.nextsurvival.commands;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,14 +36,20 @@ public class PrefixCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("prefix")) {
             if(args.length>=3) {
-                player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /prefix [name] [prefix]");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text(" Syntax --> /prefix [name] [prefix]")
+                                .color(nextSurvival.error)));
                 return false;
             }
             if(args.length==0) {
-                player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /prefix [name] [prefix]");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text(" Syntax --> /prefix [name] [prefix]")
+                                .color(nextSurvival.error)));
                 return false;
             }else if(args.length==1) {
-                player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /prefix [name] [prefix]");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text(" Syntax --> /prefix [name] [prefix]")
+                                .color(nextSurvival.error)));
                 return false;
             }else {
                 ServerConfig serverConfig = nextSurvival.serverConfig;
@@ -49,12 +57,23 @@ public class PrefixCommand implements CommandExecutor {
                 if(Bukkit.getServer().getPlayer(args[0]) != null) {
                     serverConfig.addPrefixes(Bukkit.getServer().getPlayer(args[0]).getUniqueId(), args[1]);
                 }else{
-                    Bukkit.getServer().broadcastMessage(nextSurvival.PREFIX + " §cPlayer is not on the server!");
+                    player.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" Player is not on the server!")
+                                    .color(nextSurvival.error)));
                     return true;
                 }
 
-                player.sendMessage(nextSurvival.PREFIX + " §3You have set the prefix '§r"
-                        +args[1].replace("&", "§")+"§3' for §r"+args[0]+"§3!");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text(" You have set the prefix '")
+                                .color(nextSurvival.primary))
+                        .append(Component.text(args[1].replace("&", "§")))
+                        .append(Component.text("' for ")
+                                .color(nextSurvival.primary))
+                        .append(Component.text(args[0])
+                                .color(nextSurvival.highlight_blue)
+                                .decoration(TextDecoration.BOLD, true))
+                        .append(Component.text("!")
+                                .color(nextSurvival.primary)));
 
                 FileManager.saveServerConfigFile(serverConfig);
                 return true;

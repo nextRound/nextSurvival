@@ -4,6 +4,9 @@ import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.PlayerLocation;
 import de.nextround.nextsurvival.utilities.ServerConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,18 +35,24 @@ public class HomeCommand implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("home")) {
             if(args.length>=2) {
-                player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /home <set>");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text(" Syntax --> /home <set>")
+                                .color(nextSurvival.error)));
                 return false;
             }
 
             if(args.length==0) {
                 if(!serverConfig.getHomeLocations().containsKey(player.getUniqueId())) {
-                    player.sendMessage(nextSurvival.PREFIX + " §cAt first you have to set a home --> /home set");
+                    player.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" At first you have to set a home --> /home set")
+                                    .color(nextSurvival.error)));
                     return false;
                 }
                 serverConfig.getHomeLocations().get(player.getUniqueId()).teleportPlayer(player);
 
-                player.sendMessage(nextSurvival.PREFIX + " §3You are now at your home!");
+                player.sendMessage(nextSurvival.PREFIX
+                        .append(Component.text( " You are now at your home!")
+                                .color(nextSurvival.primary)));
 
                 return true;
             } else {
@@ -51,10 +60,14 @@ public class HomeCommand implements CommandExecutor {
                     serverConfig.addHomeLocation(player, new PlayerLocation(player));
 
                     FileManager.saveServerConfigFile(serverConfig);
-                    player.sendMessage(nextSurvival.PREFIX + " §3Your home is now set to this location!");
+                    player.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" Your home is now set to this location!")
+                                    .color(nextSurvival.primary)));
                     return true;
                 }else{
-                    player.sendMessage(nextSurvival.PREFIX + " §cSyntax --> /home <set>");
+                    player.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" Syntax --> /home <set>")
+                                    .color(nextSurvival.error)));
                     return false;
                 }
             }
@@ -64,12 +77,26 @@ public class HomeCommand implements CommandExecutor {
                     if(nextSurvival.instance.recentlyDied.contains(player)) {
                         serverConfig.getDeathLocations().get(player.getUniqueId()).teleportPlayer(player);
 
-                        player.sendMessage(nextSurvival.PREFIX + " §3You are now at your death location!");
+                        player.sendMessage(nextSurvival.PREFIX
+                                .append(Component.text(" You are now at your death location!")
+                                        .color(nextSurvival.primary)));
                     }else{
-                        player.sendMessage(nextSurvival.PREFIX + " §3You ran out of time §f§l:/ §k§3There is no going back now. Sorry §f§l,_,");
+                        player.sendMessage(nextSurvival.PREFIX
+                                .append(Component.text(" You ran out of time ")
+                                        .color(nextSurvival.primary))
+                                .append(Component.text(":/")
+                                        .color(nextSurvival.highlight_yellow)
+                                        .decoration(TextDecoration.BOLD, true))
+                                .append(Component.text(" There is no going back now. Sorry ")
+                                        .color(nextSurvival.primary))
+                                .append(Component.text(",_,")
+                                        .color(nextSurvival.highlight_yellow)
+                                        .decoration(TextDecoration.BOLD, true)));
                     }
                 } else {
-                    player.sendMessage(nextSurvival.PREFIX + " §cYou have no death location saved by the server!");
+                    player.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" You have no death location saved by the server!")
+                                    .color(nextSurvival.error)));
                 }
                 return true;
             }
@@ -79,6 +106,9 @@ public class HomeCommand implements CommandExecutor {
             FileManager.saveServerConfigFile(serverConfig);
 
             player.sendMessage(nextSurvival.PREFIX + " §3Your home is now set to this location!");
+            player.sendMessage(nextSurvival.PREFIX
+                    .append(Component.text(" Your home is now set to this location!")
+                            .color(nextSurvival.primary)));
             return true;
         }
         return false;

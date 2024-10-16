@@ -6,6 +6,7 @@ import de.nextround.nextsurvival.utilities.ServerConfig;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -44,13 +45,24 @@ public class ChatListener implements Listener {
         event.renderer((source, sourceDisplayName, message, viewer) -> {
             ServerConfig serverConfig = nextSurvival.serverConfig;
 
-            if (!nextSurvival.instance.password.contains(source)) {
-                String textMessage = ((TextComponent)message).content().replace(serverConfig.getPassword(), "********");
+            String textMessage = ((TextComponent)message).content().replace(serverConfig.getPassword(), "********");
 
+            if (!nextSurvival.instance.password.contains(source)) {
                 if (serverConfig.getPrefixes().containsKey(source.getUniqueId())) {
-                    return LegacyComponentSerializer.legacySection().deserialize(serverConfig.getPrefixes().get(source.getUniqueId()).replace("&", "§") + " §5" + source.getName() + " §8» §r" + textMessage);
+                    String playerPrefix = serverConfig.getPrefixes().get(source.getUniqueId()).replace("&", "§");
+
+                    return Component.text(playerPrefix)
+                            .append(Component.text(" " + source.getName())
+                                    .color(nextSurvival.highlight_primary))
+                            .append(Component.text(" » ")
+                                    .color(nextSurvival.highlight_secondary))
+                            .append(Component.text(textMessage).color(nextSurvival.white));
                 } else {
-                    return LegacyComponentSerializer.legacySection().deserialize("§5" + source.getName() + " §8» §r" + textMessage);
+                    return Component.text(source.getName())
+                                    .color(nextSurvival.highlight_primary)
+                            .append(Component.text(" » ")
+                                    .color(nextSurvival.highlight_secondary))
+                            .append(Component.text(textMessage).color(nextSurvival.white));
                 }
             }else{
                 if(((TextComponent) message).content().equals(serverConfig.getPassword())) {
@@ -63,9 +75,23 @@ public class ChatListener implements Listener {
                         source.setGameMode(GameMode.SURVIVAL);
                     });
 
-                    source.sendMessage(nextSurvival.PREFIX + " §3You got it right! §d§l§k::: §r§bYaaay Wooop Wooop §d§l§k:::");
+                    source.sendMessage(nextSurvival.PREFIX
+                            .append(Component.text(" You got it right! ")
+                                    .color(nextSurvival.primary))
+                            .append(Component.text(":::")
+                                    .color(nextSurvival.highlight_yellow)
+                                    .decoration(TextDecoration.OBFUSCATED, true)
+                                    .decoration(TextDecoration.BOLD, true))
+                            .append(Component.text(" Yaaay Wooop Wooop ")
+                                    .color(nextSurvival.highlight_blue)
+                                    .decoration(TextDecoration.BOLD, true))
+                            .append(Component.text(":::")
+                                    .color(nextSurvival.highlight_yellow)
+                                    .decoration(TextDecoration.OBFUSCATED, true)
+                                    .decoration(TextDecoration.BOLD, true)));
+
                     System.out.println(nextSurvival.PREFIX + " " + source.getName() + " is now a member of the server!");
-                    
+
                     FileManager.saveServerConfigFile(serverConfig);
                 }
             }
@@ -73,5 +99,4 @@ public class ChatListener implements Listener {
             return Component.empty();
         });
     }
-
 }

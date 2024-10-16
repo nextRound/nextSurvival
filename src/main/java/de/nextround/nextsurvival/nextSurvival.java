@@ -5,10 +5,11 @@ import de.nextround.nextsurvival.commands.PrefixCommand;
 import de.nextround.nextsurvival.listeners.*;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
-import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,9 +33,6 @@ import java.util.ArrayList;
 
 public class nextSurvival extends JavaPlugin {
 
-    // Prefix
-    public static final String PREFIX = "§8[§dnextSurvival§8]";
-
     // Classes
     public static nextSurvival instance;
 
@@ -44,6 +42,26 @@ public class nextSurvival extends JavaPlugin {
 
     // Server Config
     public static ServerConfig serverConfig;
+
+    // Colors
+    public static final TextColor primary = TextColor.color(0x90FC96);
+    public static final TextColor secondary = TextColor.color(0x9BBD9D);
+    public static final TextColor white = TextColor.color(0xffffff);
+    public static final TextColor error = TextColor.color(0xE94153);
+    public static final TextColor highlight_primary = TextColor.color(0xd63777);
+    public static final TextColor highlight_secondary = TextColor.color(0x402437);
+    public static final TextColor highlight_blue = TextColor.color(0x7DA1FF);
+    public static final TextColor highlight_yellow = TextColor.color(0xFFD670);
+
+    // Prefix
+    public static final TextComponent PREFIX = Component.text("[")
+            .color(highlight_secondary)
+            .append(Component.text("nextSurvival")
+                    .color(highlight_primary)
+                    .decoration(TextDecoration.BOLD, true))
+            .append(Component.text("]")
+                    .color(highlight_secondary)
+            );
 
     @Override
     public void onEnable() {
@@ -65,7 +83,7 @@ public class nextSurvival extends JavaPlugin {
         Recipes.registerRecipes();
 
         /* Console enable message */
-        Bukkit.getServer().sendMessage(Component.text(PREFIX + " §cPlease rejoin to load all features of nextSurvival!"));
+        Bukkit.getServer().sendMessage(PREFIX.append(Component.text(" Please rejoin to load all features of nextSurvival!").color(error)));
 
         Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3The plugin is now §aEnabled");
         Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §3Coded by: §enextRound");

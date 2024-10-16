@@ -75,6 +75,7 @@ public class Recipes {
         ItemMeta itemMeta = craftItem.getItemMeta();
         if(itemMeta != null) {
             itemMeta.displayName(Component.text("Portable Workbench", NamedTextColor.AQUA));
+            itemMeta.setCustomModelData(1);
             itemMeta.addEnchant(Enchantment.FORTUNE, 100, true);
             craftItem.setItemMeta(itemMeta);
         }

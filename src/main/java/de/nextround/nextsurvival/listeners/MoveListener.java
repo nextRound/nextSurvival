@@ -1,9 +1,14 @@
 package de.nextround.nextsurvival.listeners;
 
+import com.destroystokyo.paper.ParticleBuilder;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.PlayerLocation;
 import de.nextround.nextsurvival.utilities.ServerConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Particle;
@@ -48,30 +53,33 @@ public class MoveListener implements Listener {
     public void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if(player.getInventory().getBoots() != null) {
-            if (Objects.requireNonNull(player.getInventory().getBoots().getItemMeta()).getDisplayName().equals("Love")) {
+        if(player.getInventory().getBoots() != null && player.getInventory().getBoots().getItemMeta() != null
+                && player.getInventory().getBoots().getItemMeta().hasDisplayName()) {
+            String displayName = ((TextComponent) player.getInventory().getBoots().getItemMeta().displayName()).content();
+
+            if (displayName.equals("Love")) {
 
                 player.getWorld().spawnParticle(Particle.HEART, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Flame")) {
+            } else if (displayName.equals("Flame")) {
 
                 player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Smoke")) {
+            } else if (displayName.equals("Smoke")) {
 
                 player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
                 player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
                 player.getWorld().spawnParticle(Particle.SMOKE, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Lava")) {
+            } else if (displayName.equals("Lava")) {
 
                 player.getWorld().spawnParticle(Particle.LAVA, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Ender")) {
+            } else if (displayName.equals("Ender")) {
 
                 player.getWorld().playEffect(player.getLocation(), Effect.ENDER_SIGNAL, 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Water")) {
+            } else if (displayName.equals("Water")) {
 
                 player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
                 player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
@@ -79,11 +87,11 @@ public class MoveListener implements Listener {
                 player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
                 player.getWorld().spawnParticle(Particle.SPLASH, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Firework")) {
+            } else if (displayName.equals("Firework")) {
 
                 player.getWorld().spawnParticle(Particle.FIREWORK, player.getLocation(), 1);
 
-            } else if (player.getInventory().getBoots().getItemMeta().getDisplayName().equals("Cloud")) {
+            } else if (displayName.equals("Cloud")) {
 
                 player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 1);
                 player.getWorld().spawnParticle(Particle.CLOUD, player.getLocation(), 1);
@@ -131,7 +139,14 @@ public class MoveListener implements Listener {
 
         Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> {
             nextSurvival.instance.recentlyDied.remove(player);
-            player.sendMessage(nextSurvival.PREFIX + " §3Death location was disabled after §f§l60 §r§3seconds!");
+            player.sendMessage(nextSurvival.PREFIX
+                    .append(Component.text(" Death location was disabled after ")
+                            .color(nextSurvival.primary))
+                    .append(Component.text("60")
+                            .color(nextSurvival.highlight_yellow)
+                            .decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(" seconds!")
+                            .color(nextSurvival.primary)));
         },1200);
     }
 
@@ -142,8 +157,8 @@ public class MoveListener implements Listener {
     public void onInteractEvent(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
 
-        if(item != null && item.getItemMeta() != null) {
-            if(item.getItemMeta().getDisplayName().equalsIgnoreCase("§2Portable Workbench")) {
+        if(item != null && item.getItemMeta() != null && item.getItemMeta().hasDisplayName()) {
+            if(item.getItemMeta().getCustomModelData() == 1) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     event.getPlayer().openWorkbench(null, true);
                     event.setCancelled(true);

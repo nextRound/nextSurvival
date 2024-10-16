@@ -1,6 +1,9 @@
 package de.nextround.nextsurvival.listeners;
 
 import de.nextround.nextsurvival.nextSurvival;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -35,18 +38,45 @@ public class SleepListener implements Listener {
      * Checks if that ratio is >= 0.3 (30%) and forwards the time (forward(World world))
      */
     @EventHandler
-    public void onSleep(PlayerBedEnterEvent e) {
-        if (e.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
+    public void onSleep(PlayerBedEnterEvent event) {
+        if (event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             double count = Bukkit.getOnlinePlayers().stream().filter(LivingEntity::isSleeping).count() + 1;
             double ratio = count / Bukkit.getOnlinePlayers().size();
-            Bukkit.broadcastMessage(nextSurvival.PREFIX + " §5" + e.getPlayer().getDisplayName() +
-                    " §3is now sleeping §7(§f§l" + Math.floor(ratio * 100) + "%§7)");
+
+            Bukkit.getServer().sendMessage(nextSurvival.PREFIX
+                    .append(Component.text(" " + event.getPlayer().getName())
+                            .color(nextSurvival.highlight_blue))
+                    .append(Component.text(" is now sleeping ")
+                            .color(nextSurvival.primary))
+                    .append(Component.text(" (")
+                            .color(nextSurvival.highlight_secondary))
+                    .append(Component.text(Math.floor(ratio * 100) + "%")
+                            .color(nextSurvival.white)
+                            .decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(")")
+                            .color(nextSurvival.highlight_secondary)));
+
             if (ratio >= 0.3) {
-                e.getBed().getWorld().setClearWeatherDuration(Integer.MAX_VALUE);
-                String message = e.getBed().getWorld().isClearWeather() ? " §f§l"+Math.floor(ratio * 100)+ "% §3are sleeping. Skipping the night..." :
-                        " §f§l"+Math.floor(ratio * 100)+"% §3are sleeping. Skipping the thunderstorm...";
-                Bukkit.broadcastMessage(nextSurvival.PREFIX + ChatColor.BLUE + message);
-                Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> forward(e.getBed().getWorld()), 40);
+                event.getBed().getWorld().setClearWeatherDuration(Integer.MAX_VALUE);
+
+                TextComponent night = Component.text(" " + Math.floor(ratio * 100) + "%")
+                                .color(nextSurvival.white)
+                                .decoration(TextDecoration.BOLD, true)
+                        .append(Component.text(" are sleeping. Skipping the night...")
+                                .color(nextSurvival.primary)
+                                .decoration(TextDecoration.BOLD, false));
+                TextComponent thunderstorm = Component.text(" " + Math.floor(ratio * 100) + "%")
+                                .color(nextSurvival.white)
+                                .decoration(TextDecoration.BOLD, true)
+                        .append(Component.text(" are sleeping. Skipping the thunderstorm...")
+                                .color(nextSurvival.primary)
+                                .decoration(TextDecoration.BOLD, false));
+
+                TextComponent message = event.getBed().getWorld().isClearWeather() ? night : thunderstorm;
+
+                Bukkit.getServer().sendMessage(nextSurvival.PREFIX.append(message));
+
+                Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> forward(event.getBed().getWorld()), 40);
             }
         }
     }

@@ -3,6 +3,9 @@ package de.nextround.nextsurvival.listeners;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -43,26 +46,42 @@ public class ConnectionListeners implements Listener {
         ServerConfig serverConfig = nextSurvival.serverConfig;
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
-            event.setJoinMessage("§7[§a+§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
+            event.joinMessage(Component.text("[")
+                    .color(nextSurvival.highlight_secondary)
+                    .append(Component.text("+")
+                            .color(TextColor.color(0xFF1A)))
+                    .append(Component.text("] ")
+                            .color(nextSurvival.highlight_secondary))
+                    .append(Component.text("§r" + serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
+                    .append(Component.text(" " + player.getName())
+                            .color(nextSurvival.highlight_primary)));
         }else{
-            event.setJoinMessage("§7[§a+§7]§5 "+player.getName());
+            event.joinMessage(Component.text("[")
+                    .color(nextSurvival.highlight_secondary)
+                    .append(Component.text("+")
+                            .color(TextColor.color(0xFF1A)))
+                    .append(Component.text("] ")
+                            .color(nextSurvival.highlight_secondary))
+                    .append(Component.text(player.getName())
+                            .color(nextSurvival.highlight_primary)));
         }
 
-        if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId())) {
-            serverConfig.addPasswordChecker(player.getUniqueId(), false);
+
+        if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId()) || !serverConfig.getPasswordChecker().get(player.getUniqueId())) {
+            if(!serverConfig.getPasswordChecker().containsKey(player.getUniqueId()))
+                serverConfig.addPasswordChecker(player.getUniqueId(), false);
 
             nextSurvival.instance.password.add(player);
             player.setGameMode(GameMode.ADVENTURE);
 
-            player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §aPASSWORD §4in the chat!");
-
-            FileManager.saveServerConfigFile(serverConfig);
-        }else if(!serverConfig.getPasswordChecker().get(player.getUniqueId())) {
-            nextSurvival.instance.password.add(player);
-            player.setGameMode(GameMode.ADVENTURE);
-
-            player.sendMessage(nextSurvival.PREFIX + " §4Please type the server §a§lPASSWORD §4in the chat!");
-            player.sendMessage(nextSurvival.PREFIX + " §3While doing that you §a§lACCEPT §3tall of our server rules!");
+            player.sendMessage(nextSurvival.PREFIX
+                    .append(Component.text(" Please type the server ")
+                            .color(nextSurvival.error))
+                    .append(Component.text("password")
+                            .color(nextSurvival.highlight_yellow)
+                            .decoration(TextDecoration.BOLD, true))
+                    .append(Component.text(" in the chat!")
+                            .color(nextSurvival.error)));
         }
     }
 
@@ -76,9 +95,24 @@ public class ConnectionListeners implements Listener {
         ServerConfig serverConfig = nextSurvival.serverConfig;
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
-            event.setQuitMessage("§7[§c-§7] §r"+ serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§") +" §5"+player.getName());
+            event.quitMessage(Component.text("[")
+                    .color(nextSurvival.highlight_secondary)
+                    .append(Component.text("-")
+                            .color(TextColor.color(0xFF2D4B)))
+                    .append(Component.text("] ")
+                            .color(nextSurvival.highlight_secondary))
+                    .append(Component.text("§r" + serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
+                    .append(Component.text(" " + player.getName())
+                            .color(nextSurvival.highlight_primary)));
         }else {
-            event.setQuitMessage("§7[§c-§7]§5 " + player.getName());
+            event.quitMessage(Component.text("[")
+                    .color(nextSurvival.highlight_secondary)
+                    .append(Component.text("-")
+                            .color(TextColor.color(0xFF2D4B)))
+                    .append(Component.text("] ")
+                            .color(nextSurvival.highlight_secondary))
+                    .append(Component.text(player.getName())
+                            .color(nextSurvival.highlight_primary)));
         }
     }
 }
