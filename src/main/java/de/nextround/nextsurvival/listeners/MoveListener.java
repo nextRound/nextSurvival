@@ -1,13 +1,11 @@
 package de.nextround.nextsurvival.listeners;
 
-import com.destroystokyo.paper.ParticleBuilder;
 import de.nextround.nextsurvival.nextSurvival;
 import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.PlayerLocation;
 import de.nextround.nextsurvival.utilities.ServerConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -22,8 +20,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Objects;
 
 /*
  *
@@ -135,7 +131,7 @@ public class MoveListener implements Listener {
 
         ServerConfig serverConfig = nextSurvival.serverConfig;
         serverConfig.addDeathLocation(player, new PlayerLocation(player));
-        FileManager.saveServerConfigFile(serverConfig);
+        FileManager.saveServerConfig(serverConfig);
 
         Bukkit.getScheduler().runTaskLater(nextSurvival.instance, () -> {
             nextSurvival.instance.recentlyDied.remove(player);

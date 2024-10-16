@@ -5,7 +5,6 @@ import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.PlayerLocation;
 import de.nextround.nextsurvival.utilities.ServerConfig;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -59,7 +58,7 @@ public class HomeCommand implements CommandExecutor {
                 if(args[0].equalsIgnoreCase("set")) {
                     serverConfig.addHomeLocation(player, new PlayerLocation(player));
 
-                    FileManager.saveServerConfigFile(serverConfig);
+                    FileManager.saveServerConfig(serverConfig);
                     player.sendMessage(nextSurvival.PREFIX
                             .append(Component.text(" Your home is now set to this location!")
                                     .color(nextSurvival.primary)));
@@ -103,9 +102,8 @@ public class HomeCommand implements CommandExecutor {
         }else if (command.getName().equalsIgnoreCase("sethome")) {
             serverConfig.addHomeLocation(player, new PlayerLocation(player));
 
-            FileManager.saveServerConfigFile(serverConfig);
+            FileManager.saveServerConfig(serverConfig);
 
-            player.sendMessage(nextSurvival.PREFIX + " §3Your home is now set to this location!");
             player.sendMessage(nextSurvival.PREFIX
                     .append(Component.text(" Your home is now set to this location!")
                             .color(nextSurvival.primary)));

@@ -75,7 +75,7 @@ public class PrefixCommand implements CommandExecutor {
                         .append(Component.text("!")
                                 .color(nextSurvival.primary)));
 
-                FileManager.saveServerConfigFile(serverConfig);
+                FileManager.saveServerConfig(serverConfig);
                 return true;
             }
         }

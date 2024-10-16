@@ -7,12 +7,10 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /*
  *
@@ -92,7 +90,7 @@ public class ChatListener implements Listener {
 
                     System.out.println(nextSurvival.PREFIX + " " + source.getName() + " is now a member of the server!");
 
-                    FileManager.saveServerConfigFile(serverConfig);
+                    FileManager.saveServerConfig(serverConfig);
                 }
             }
 

@@ -26,21 +26,27 @@ import java.util.UUID;
 
 public class ServerConfig {
 
-    private final HashMap<UUID, Boolean> passwordChecker;
-    private final HashMap<UUID, PlayerLocation> homeLocations;
-    private final HashMap<UUID, PlayerLocation> deathLocations;
-    private final HashMap<UUID, String> prefixes;
-    private final String password;
+    private String configVersion;
+    private HashMap<UUID, Boolean> passwordChecker;
+    private HashMap<UUID, PlayerLocation> homeLocations;
+    private HashMap<UUID, PlayerLocation> deathLocations;
+    private HashMap<UUID, String> prefixes;
+    private String password;
 
     /*
      * A class that is structured to easily save, create and update the config.json
      */
-    public ServerConfig(String password) {
+    public ServerConfig(String password, String configVersion) {
+        this.configVersion = configVersion;
         this.passwordChecker = new HashMap<>();
         this.homeLocations = new HashMap<>();
         this.deathLocations = new HashMap<>();
         this.prefixes = new HashMap<>();
         this.password = password;
+    }
+
+    public String getConfigVersion() {
+        return configVersion;
     }
 
     public HashMap<UUID, Boolean> getPasswordChecker() {
@@ -95,20 +101,24 @@ public class ServerConfig {
         }
     }
 
-    /*
-     * Reads the config.json and returns a ServerConfig object with the content of the config.json
-     */
-    public static ServerConfig getServerConfig() throws IOException {
-        File file = new File("plugins/nextSurvival", "config.json");
-
-        if (!file.exists()) {
-            return FileManager.createDefaultServerConfigFile(new ServerConfig("bamboowagon"));
-        } else {
-            String userConfig = new String(Files.readAllBytes(Paths.get(file.getPath())));
-
-            Gson gson = new Gson();
-
-            return gson.fromJson(userConfig, ServerConfig.class);
+    public void fillNullValuesWithDefaultValues(String password, String configVersion) {
+        if (this.configVersion == null || !this.configVersion.equals(configVersion)) {
+            this.configVersion = configVersion;
+        }
+        if (passwordChecker == null) {
+            this.passwordChecker = new HashMap<>();
+        }
+        if (homeLocations == null) {
+            this.homeLocations = new HashMap<>();
+        }
+        if (deathLocations == null) {
+            this.deathLocations = new HashMap<>();
+        }
+        if (prefixes == null) {
+            this.prefixes = new HashMap<>();
+        }
+        if (this.password == null) {
+            this.password = password;
         }
     }
 }

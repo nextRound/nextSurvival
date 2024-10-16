@@ -67,14 +67,14 @@ public class nextSurvival extends JavaPlugin {
     public void onEnable() {
         try {
             serverConfig = new File("plugins/nextSurvival/", "config.json").exists() ?
-                    ServerConfig.getServerConfig() :
-                    FileManager.createDefaultServerConfigFile(new ServerConfig("bamboowagon"));
+                    FileManager.getServerConfig() :
+                    FileManager.createDefaultServerConfigFile();
         } catch (IOException e) {
             Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §cConfig creation/loading failed!");
             Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §cConfig will only be cached and is " +
                     "temporary until the next server restart!");
             Bukkit.getConsoleSender().sendMessage("§8[§2nextSurvival§8] §cPassword is: §ebamboowagon");
-            serverConfig = new ServerConfig("bamboowagon");
+            serverConfig = new ServerConfig("bamboowagon", "1.0");
         }
 
         instance = this;
