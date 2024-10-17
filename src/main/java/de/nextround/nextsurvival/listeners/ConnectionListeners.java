@@ -1,7 +1,6 @@
 package de.nextround.nextsurvival.listeners;
 
 import de.nextround.nextsurvival.nextSurvival;
-import de.nextround.nextsurvival.utilities.FileManager;
 import de.nextround.nextsurvival.utilities.ServerConfig;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -13,6 +12,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /*
  *
@@ -101,6 +103,13 @@ public class ConnectionListeners implements Listener {
 
     private static void setTabHeaderFooter(Player player) {
         long days = player.getWorld().getGameTime()/24000;
+
+        Component dayOrNight = LocalTime.now().getHour() >= 20 || LocalTime.now().getHour() <= 8 ?
+                Component.text("night")
+                .color(nextSurvival.highlight_blue) :
+                Component.text("day")
+                .color(nextSurvival.highlight_yellow);
+
         Component header = Component.text(days)
                 .color(nextSurvival.highlight_primary)
                 .decoration(TextDecoration.BOLD, true)
@@ -109,12 +118,7 @@ public class ConnectionListeners implements Listener {
                         .decoration(TextDecoration.BOLD, false));
         Component footer = Component.text("Have a great ")
                 .color(nextSurvival.primary)
-                .append(Component.text("day")
-                        .color(nextSurvival.highlight_yellow))
-                .append(Component.text("/")
-                        .color(nextSurvival.highlight_secondary))
-                .append(Component.text("night")
-                        .color(nextSurvival.highlight_blue))
+                .append(dayOrNight)
                 .append(Component.text(" :3")
                         .color(nextSurvival.highlight_primary)
                         .decoration(TextDecoration.BOLD, true));
