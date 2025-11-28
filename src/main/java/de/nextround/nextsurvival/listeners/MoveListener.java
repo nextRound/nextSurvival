@@ -112,10 +112,6 @@ public class MoveListener implements Listener {
     public void onMobSpawn(EntitySpawnEvent event) {
         if (event.getEntityType() == EntityType.BAT) {
             event.setCancelled(true);
-        } else if (event.getEntityType() == EntityType.PILLAGER) {
-            if (Math.random() < 0.8) {
-                event.setCancelled(true);
-            }
         }
     }
 
