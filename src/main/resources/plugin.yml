@@ -13,3 +13,5 @@ commands:
     description: Create a prefix for a specific player.
   back:
     description: Teleports the player back to the last death location.
+  getHorseSpeed:
+    description: Get the speed of the horse you are looking at.

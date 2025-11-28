@@ -1,6 +1,7 @@
 package de.nextround.nextsurvival;
 
 import de.nextround.nextsurvival.commands.HomeCommand;
+import de.nextround.nextsurvival.commands.HorseSpeedCommand;
 import de.nextround.nextsurvival.commands.PrefixCommand;
 import de.nextround.nextsurvival.listeners.*;
 import de.nextround.nextsurvival.utilities.FileManager;
@@ -107,6 +108,7 @@ public class nextSurvival extends JavaPlugin {
         getCommand("sethome").setExecutor(new HomeCommand());
         getCommand("back").setExecutor(new HomeCommand());
         getCommand("prefix").setExecutor(new PrefixCommand());
+        getCommand("getHorseSpeed").setExecutor(new HorseSpeedCommand());
     }
 
     /*
