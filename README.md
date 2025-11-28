@@ -24,3 +24,4 @@ After editing the config always restart your server.
 /sethome » Shortcut for "/home set" </br>
 /back » Teleports you to your death-location (if one exists) </br>
 /prefix <player-name> <prefix> » Sets a prefix for a specific player (use "&" for color-codes) </br>
+/gethorsespeed » Get the speed of the horse you are looking at.
