@@ -105,17 +105,6 @@ public class MoveListener implements Listener {
     }
 
     /*
-     * Stops BAT´s from spawning
-     * Reduces the spawn-rate of PILLAGERS by 20%
-     */
-    @EventHandler
-    public void onMobSpawn(EntitySpawnEvent event) {
-        if (event.getEntityType() == EntityType.BAT) {
-            event.setCancelled(true);
-        }
-    }
-
-    /*
      * Saves the death-location of the player in the config.json
      * Starts a timer (60s) which determines how much time the player has to execute the command /back
      */

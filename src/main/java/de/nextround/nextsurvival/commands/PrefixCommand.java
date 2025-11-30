@@ -51,7 +51,7 @@ public class PrefixCommand implements CommandExecutor {
                         .append(Component.text(" Syntax --> /prefix [name] [prefix]")
                                 .color(nextSurvival.error)));
                 return false;
-            }else {
+            } else {
                 ServerConfig serverConfig = nextSurvival.serverConfig;
 
                 if(Bukkit.getServer().getPlayer(args[0]) != null) {
