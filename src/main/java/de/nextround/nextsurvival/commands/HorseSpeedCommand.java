@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public class HorseSpeedCommand implements CommandExecutor {
 
     /*
-     * Creates a /getHorseSpeed
+     * Creates a /getHorseSpeed command
      */
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String arg, String[] args) {
         Player player = (Player) sender;

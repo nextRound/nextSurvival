@@ -15,3 +15,5 @@ commands:
     description: Teleports the player back to the last death location.
   getHorseSpeed:
     description: Get the speed of the horse you are looking at.
+  password:
+    description: Command to provide the server password

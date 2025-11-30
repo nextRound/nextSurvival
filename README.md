@@ -25,3 +25,4 @@ After editing the config always restart your server.
 /back » Teleports you to your death-location (if one exists) </br>
 /prefix <player-name> <prefix> » Sets a prefix for a specific player (use "&" for color-codes) </br>
 /gethorsespeed » Get the speed of the horse you are looking at.
+/password <password-string> » Command to provide the server password.

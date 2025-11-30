@@ -91,12 +91,12 @@ public class ConnectionListeners implements Listener {
             player.setGameMode(GameMode.ADVENTURE);
 
             player.sendMessage(nextSurvival.PREFIX
-                    .append(Component.text(" Please type the server ")
+                    .append(Component.text(" Please use the command ")
                             .color(nextSurvival.error))
-                    .append(Component.text("password")
+                    .append(Component.text("/password [password-string]")
                             .color(nextSurvival.highlight_yellow)
                             .decoration(TextDecoration.BOLD, true))
-                    .append(Component.text(" in the chat!")
+                    .append(Component.text(" to provide the server password!")
                             .color(nextSurvival.error)));
         }
     }

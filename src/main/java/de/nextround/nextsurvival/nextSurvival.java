@@ -2,6 +2,7 @@ package de.nextround.nextsurvival;
 
 import de.nextround.nextsurvival.commands.HomeCommand;
 import de.nextround.nextsurvival.commands.HorseSpeedCommand;
+import de.nextround.nextsurvival.commands.PasswordCommand;
 import de.nextround.nextsurvival.commands.PrefixCommand;
 import de.nextround.nextsurvival.listeners.*;
 import de.nextround.nextsurvival.utilities.FileManager;
@@ -38,7 +39,7 @@ public class nextSurvival extends JavaPlugin {
     public static nextSurvival instance;
 
     // Lists/Hashmaps
-    public final ArrayList<Player> password = new ArrayList<>();
+    public final ArrayList<Player> password = new ArrayList<>(); // All players who are currently being checked for the correct password
     public final ArrayList<Player> recentlyDied = new ArrayList<>();
 
     // Server Config
@@ -109,6 +110,7 @@ public class nextSurvival extends JavaPlugin {
         getCommand("back").setExecutor(new HomeCommand());
         getCommand("prefix").setExecutor(new PrefixCommand());
         getCommand("getHorseSpeed").setExecutor(new HorseSpeedCommand());
+        getCommand("password").setExecutor(new PasswordCommand());
     }
 
     /*

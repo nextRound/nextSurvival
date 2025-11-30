@@ -28,6 +28,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class HomeCommand implements CommandExecutor {
 
+    /*
+     * Creates /home and /back commands
+     */
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String arg, String[] args) {
         Player player = (Player) sender;
         ServerConfig serverConfig = nextSurvival.serverConfig;

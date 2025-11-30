@@ -43,7 +43,7 @@ public class ChatListener implements Listener {
         event.renderer((source, sourceDisplayName, message, viewer) -> {
             ServerConfig serverConfig = nextSurvival.serverConfig;
 
-            String textMessage = ((TextComponent)message).content().replace(serverConfig.getPassword(), "********");
+            String textMessage = ((TextComponent) message).content();
 
             if (!nextSurvival.instance.password.contains(source)) {
                 if (serverConfig.getPrefixes().containsKey(source.getUniqueId())) {
@@ -62,7 +62,7 @@ public class ChatListener implements Listener {
                                     .color(nextSurvival.highlight_secondary))
                             .append(Component.text(textMessage).color(nextSurvival.white));
                 }
-            }else{
+            }/*else{
                 if(((TextComponent) message).content().equals(serverConfig.getPassword())) {
                     event.setCancelled(true);
 
@@ -92,7 +92,7 @@ public class ChatListener implements Listener {
 
                     FileManager.saveServerConfig(serverConfig);
                 }
-            }
+            }*/
 
             return Component.empty();
         });
