@@ -55,8 +55,6 @@ public class PasswordCommand implements CommandExecutor  {
 
                     System.out.println(nextSurvival.PREFIX + " " + player.getName() + " is now a member of the server!");
 
-
-
                     FileManager.saveServerConfig(serverConfig);
                 }
             } else {

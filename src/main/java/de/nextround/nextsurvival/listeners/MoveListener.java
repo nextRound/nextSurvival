@@ -138,7 +138,7 @@ public class MoveListener implements Listener {
     public void onInteractEvent(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
 
-        if(item != null && item.getItemMeta() != null && item.getItemMeta().hasDisplayName()) {
+        if(item != null && item.getItemMeta() != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasCustomModelData()) {
             if(item.getItemMeta().getCustomModelData() == 1) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     event.getPlayer().openWorkbench(null, true);
