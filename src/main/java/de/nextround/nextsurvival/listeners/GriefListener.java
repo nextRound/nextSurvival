@@ -37,14 +37,4 @@ public class GriefListener implements Listener {
             e.blockList().clear();
         }
     }
-
-    /*
-     * Cancels the EntityChangeBlockEvent for every entity that is an ENDERMAN
-     */
-    @EventHandler
-    public void onEndermanPickup(EntityChangeBlockEvent event) {
-        if (event.getEntityType() == EntityType.ENDERMAN) {
-            event.setCancelled(true);
-        }
-    }
 }

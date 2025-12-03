@@ -10,6 +10,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Particle;
+import org.bukkit.Statistic;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +18,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MenuType;
+import org.bukkit.inventory.view.CrafterView;
 
 /*
  *
@@ -129,6 +135,26 @@ public class MoveListener implements Listener {
                     .append(Component.text(" seconds!")
                             .color(nextSurvival.primary)));
         },1200);
+
+        updateDeathCounter(serverConfig, player, player.getStatistic(Statistic.DEATHS) + 1);
+    }
+
+    /**
+     * Update the death counter in the player list.
+     */
+    public static void updateDeathCounter(ServerConfig serverConfig, Player player, int deaths) {
+        if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
+            player.playerListName(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§"))
+                    .append(Component.text(" " + player.getName())
+                            .color(nextSurvival.highlight_primary))
+                    .append(Component.text(" " + deaths + "†")
+                            .color(nextSurvival.highlight_blue)));
+        } else {
+            player.playerListName(Component.text(player.getName())
+                    .color(nextSurvival.highlight_primary)
+                    .append(Component.text(" " + deaths + "†")
+                            .color(nextSurvival.highlight_blue)));
+        }
     }
 
     /**
@@ -138,10 +164,15 @@ public class MoveListener implements Listener {
     public void onInteractEvent(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
 
-        if(item != null && item.getItemMeta() != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasCustomModelData()) {
-            if(item.getItemMeta().getCustomModelData() == 1) {
+        if(item != null && item.getItemMeta() != null && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasCustomModelDataComponent()) {
+            if(item.getItemMeta().getCustomModelDataComponent().getFloats().get(0) == 1) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    event.getPlayer().openWorkbench(null, true);
+
+                    MenuType.CRAFTING.builder()
+                                    .title(Component.text("Portable Crafting Table"))
+                                            .build(event.getPlayer())
+                                                    .open();
+
                     event.setCancelled(true);
                 }
             }

@@ -1,5 +1,8 @@
 package de.nextround.nextsurvival;
 
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -76,10 +79,11 @@ public class Recipes {
         ItemMeta itemMeta = craftItem.getItemMeta();
         if(itemMeta != null) {
             itemMeta.displayName(Component.text("Portable Workbench", NamedTextColor.AQUA));
-            itemMeta.setCustomModelData(1);
             itemMeta.addEnchant(Enchantment.FORTUNE, 100, true);
             craftItem.setItemMeta(itemMeta);
         }
+
+        craftItem.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addFloat(1));
 
         ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(nextSurvival.instance, key), craftItem);
         recipe.shape("OOO", "OSO", "OOO");

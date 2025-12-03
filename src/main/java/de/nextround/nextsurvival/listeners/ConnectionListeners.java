@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,6 +53,7 @@ public class ConnectionListeners implements Listener {
     }
 
     private static void joinMessageAndTabList(PlayerJoinEvent event, ServerConfig serverConfig, Player player) {
+        MoveListener.updateDeathCounter(serverConfig, player, player.getStatistic(Statistic.DEATHS));
 
         if(serverConfig.getPrefixes().containsKey(player.getUniqueId())) {
             event.joinMessage(Component.text("[")
@@ -63,11 +65,6 @@ public class ConnectionListeners implements Listener {
                     .append(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
                     .append(Component.text(" " + player.getName())
                             .color(nextSurvival.highlight_primary)));
-
-            player.playerListName(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§"))
-                    .append(Component.text(" " + player.getName())
-                            .color(nextSurvival.highlight_primary)));
-
         }else{
             event.joinMessage(Component.text("[")
                     .color(nextSurvival.highlight_secondary)
@@ -77,9 +74,6 @@ public class ConnectionListeners implements Listener {
                             .color(nextSurvival.highlight_secondary))
                     .append(Component.text(player.getName())
                             .color(nextSurvival.highlight_primary)));
-
-            player.playerListName(Component.text(player.getName())
-                            .color(nextSurvival.highlight_primary));
         }
     }
 

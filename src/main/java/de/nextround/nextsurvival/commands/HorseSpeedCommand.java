@@ -42,7 +42,7 @@ public class HorseSpeedCommand implements CommandExecutor {
 
                 if (entity != null && entity.getType() == EntityType.HORSE) {
                     Horse horse = (Horse) entity;
-                    AttributeInstance instance = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+                    AttributeInstance instance = horse.getAttribute(Attribute.MOVEMENT_SPEED);
 
                     player.sendMessage(nextSurvival.PREFIX
                             .append(Component.text(" Speed of ")
@@ -60,7 +60,6 @@ public class HorseSpeedCommand implements CommandExecutor {
                     player.sendMessage(nextSurvival.PREFIX
                             .append(Component.text(" No horse found!")
                                     .color(nextSurvival.error)));
-
                 }
                 return true;
             }catch (NullPointerException e){
