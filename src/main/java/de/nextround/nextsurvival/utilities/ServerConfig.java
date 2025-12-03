@@ -1,12 +1,7 @@
 package de.nextround.nextsurvival.utilities;
 
-import com.google.gson.Gson;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.UUID;
 

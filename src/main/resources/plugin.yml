@@ -1,8 +1,8 @@
 name: nextSurvival
 author: nextRound
 main: de.nextround.nextsurvival.nextSurvival
-version: 1.0.3
-api-version: 1.21.1
+version: 1.0.4
+api-version: 1.21.10
 
 commands:
   home:

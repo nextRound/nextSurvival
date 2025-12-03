@@ -1,6 +1,5 @@
 package de.nextround.nextsurvival;
 
-import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
 import net.kyori.adventure.text.Component;
@@ -40,6 +39,7 @@ public class Recipes {
         addSlabRecipe("warped_slab_plank", Material.WARPED_PLANKS, Material.WARPED_SLAB);
         addSlabRecipe("cherry_slab_plank", Material.CHERRY_PLANKS, Material.CHERRY_SLAB);
         addSlabRecipe("mangrove_slab_plank", Material.MANGROVE_PLANKS, Material.MANGROVE_SLAB);
+        addSlabRecipe("pale_oak_slab_plank", Material.PALE_OAK_PLANKS, Material.PALE_OAK_SLAB);
 
         addSlabRecipe("stone_slab_block", Material.STONE, Material.STONE_SLAB);
         addSlabRecipe("smooth_stone_slab_block", Material.SMOOTH_STONE, Material.SMOOTH_STONE_SLAB);
@@ -57,6 +57,9 @@ public class Recipes {
         addPortableWorkbenchRecipe("portable_workbench_jungle",Material.JUNGLE_WOOD);
         addPortableWorkbenchRecipe("portable_workbench_acacia",Material.ACACIA_WOOD);
         addPortableWorkbenchRecipe("portable_workbench_dark_oak",Material.DARK_OAK_WOOD);
+        addPortableWorkbenchRecipe("portable_workbench_mangrove",Material.MANGROVE_WOOD);
+        addPortableWorkbenchRecipe("portable_workbench_cherry",Material.CHERRY_WOOD);
+        addPortableWorkbenchRecipe("portable_workbench_pale_oak",Material.PALE_OAK_WOOD);
     }
 
     /**
