@@ -86,8 +86,6 @@ public class FileManager {
         Gson gson = new Gson();
         String server = gson.toJson(serverConfig);
 
-        System.out.println(serverConfig);
-
         File file = new File("plugins/nextSurvival", "config.json");
 
         try {

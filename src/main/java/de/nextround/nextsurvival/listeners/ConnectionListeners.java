@@ -67,6 +67,7 @@ public class ConnectionListeners implements Listener {
             player.playerListName(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§"))
                     .append(Component.text(" " + player.getName())
                             .color(nextSurvival.highlight_primary)));
+
         }else{
             event.joinMessage(Component.text("[")
                     .color(nextSurvival.highlight_secondary)

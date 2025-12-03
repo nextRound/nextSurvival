@@ -62,37 +62,7 @@ public class ChatListener implements Listener {
                                     .color(nextSurvival.highlight_secondary))
                             .append(Component.text(textMessage).color(nextSurvival.white));
                 }
-            }/*else{
-                if(((TextComponent) message).content().equals(serverConfig.getPassword())) {
-                    event.setCancelled(true);
-
-                    nextSurvival.instance.password.remove(source);
-                    serverConfig.addPasswordChecker(source.getUniqueId(), true);
-
-                    Bukkit.getScheduler().runTask(nextSurvival.instance ,()-> {
-                        source.setGameMode(GameMode.SURVIVAL);
-                    });
-
-                    source.sendMessage(nextSurvival.PREFIX
-                            .append(Component.text(" You got it right! ")
-                                    .color(nextSurvival.primary))
-                            .append(Component.text(":::")
-                                    .color(nextSurvival.highlight_yellow)
-                                    .decoration(TextDecoration.OBFUSCATED, true)
-                                    .decoration(TextDecoration.BOLD, true))
-                            .append(Component.text(" Yaaay Wooop Wooop ")
-                                    .color(nextSurvival.highlight_blue)
-                                    .decoration(TextDecoration.BOLD, true))
-                            .append(Component.text(":::")
-                                    .color(nextSurvival.highlight_yellow)
-                                    .decoration(TextDecoration.OBFUSCATED, true)
-                                    .decoration(TextDecoration.BOLD, true)));
-
-                    System.out.println(nextSurvival.PREFIX + " " + source.getName() + " is now a member of the server!");
-
-                    FileManager.saveServerConfig(serverConfig);
-                }
-            }*/
+            }
 
             return Component.empty();
         });
