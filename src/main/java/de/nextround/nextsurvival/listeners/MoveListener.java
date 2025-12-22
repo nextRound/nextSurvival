@@ -153,6 +153,7 @@ public class MoveListener implements Listener {
 
     /**
      * Interact event for the Portable Crafting table. Cancels the event and opens the workbench inventory.
+     * TODO: Check if player clicks on an interactable block and if so, don't open the workbench
      */
     @EventHandler
     public void onInteractEvent(PlayerInteractEvent event) {

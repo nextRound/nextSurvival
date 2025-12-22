@@ -8,6 +8,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Statistic;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  *
@@ -138,7 +141,7 @@ public class ConnectionListeners implements Listener {
                     .append(Component.text(serverConfig.getPrefixes().get(player.getUniqueId()).replace("&","§")))
                     .append(Component.text(" " + player.getName())
                             .color(nextSurvival.highlight_primary)));
-        }else {
+        } else {
             event.quitMessage(Component.text("[")
                     .color(nextSurvival.highlight_secondary)
                     .append(Component.text("-")
@@ -147,6 +150,15 @@ public class ConnectionListeners implements Listener {
                             .color(nextSurvival.highlight_secondary))
                     .append(Component.text(player.getName())
                             .color(nextSurvival.highlight_primary)));
+        }
+
+        ArrayList<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        List<Player> sleepingPlayers = new ArrayList<>(players.stream().filter(LivingEntity::isSleeping).toList());
+
+        players.remove(player);
+
+        if(!sleepingPlayers.isEmpty()) {
+            SleepListener.checkToSkipTheNight(sleepingPlayers.getFirst().getWorld(), players);
         }
     }
 }
